@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Domina el trinomio cuadrado perfecto por suma y resta</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5ee;--card:#fff;--ink:#17233f;--mute:#5a6480;--navy:#17357a;--gold:#b98a0f;--goldbg:#fbf1cf;--green:#2c6e3f;--greenbg:#e3f1e6;--red:#a3312b;--redbg:#f8e3e1;--line:#ded9c8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1729;--card:#18223b;--ink:#eef0f7;--mute:#a4adc6;--navy:#8fb0ff;--gold:#e8c14e;--goldbg:#3a3116;--green:#7fd196;--greenbg:#173324;--red:#ff9a92;--redbg:#3d1d1b;--line:#2b3757}}
+:root[data-theme="dark"]{--bg:#0f1729;--card:#18223b;--ink:#eef0f7;--mute:#a4adc6;--navy:#8fb0ff;--gold:#e8c14e;--goldbg:#3a3116;--green:#7fd196;--greenbg:#173324;--red:#ff9a92;--redbg:#3d1d1b;--line:#2b3757}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Nunito Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0 0 .5em}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(160deg,#17357a 0%,#0f2456 100%);color:#fff;padding:56px 0 64px;border-bottom:6px solid #d4a72c}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:700;max-width:16em}
+.hero p{color:#d5def5;max-width:34em}
+.formula{margin-top:28px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:22px;font-family:Fraunces,Georgia,serif;font-size:clamp(1.15rem,4.2vw,1.9rem);overflow-x:auto;white-space:nowrap}
+.formula .g{color:#f0cd63}.formula .v{color:#8fdca4}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 20px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:700;font-size:.88rem;padding:6px 12px;border-radius:99px;border:1px solid var(--line)}
+nav a:hover,nav a:focus-visible{background:var(--navy);color:var(--bg);outline:none}
+section{padding:46px 0 6px}
+h2{font-size:1.8rem;color:var(--navy)}
+h2 .n{display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--gold);color:#fff;font-size:.7em;margin-right:.5em;vertical-align:.1em;font-family:"Nunito Sans",sans-serif}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0}
+.math{font-family:Fraunces,Georgia,serif;font-size:1.2rem;overflow-x:auto}
+.key{border-left:5px solid var(--gold);background:var(--goldbg)}
+.ok{border-left:5px solid var(--green);background:var(--greenbg)}
+.bad{border-left:5px solid var(--red);background:var(--redbg)}
+.g{color:var(--gold);font-weight:700}.v{color:var(--green);font-weight:700}.r{color:var(--red);font-weight:700}.b{color:var(--navy);font-weight:700}
+ol.steps{padding-left:1.2em}ol.steps li{margin:.4em 0}
+.ex h3{font-size:1.2rem;color:var(--green)}
+.ex .line{padding:6px 0;border-bottom:1px dashed var(--line)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:12px 0;padding:0 18px}
+summary{cursor:pointer;padding:14px 0;font-weight:700;color:var(--navy)}
+summary:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details .sol{padding-bottom:14px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.q button{display:block;width:100%;text-align:left;font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:7px 0;cursor:pointer}
+.q button:hover{border-color:var(--navy)}
+.q button.right{background:var(--greenbg);border-color:var(--green)}
+.q button.wrong{background:var(--redbg);border-color:var(--red)}
+.fb{min-height:1.4em;font-weight:700;margin-top:6px}
+.score{font-family:Fraunces,Georgia,serif;font-size:1.3rem;color:var(--navy)}
+footer{margin-top:60px;padding:28px 0;text-align:center;color:var(--mute);border-top:4px solid #d4a72c;font-size:.9rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<h1>Factoriza como un experto: trinomio cuadrado perfecto por suma y resta</h1>
+<p>Una ruta corta y clara: entiendes la teoría desde cero, aprendes el método, lo ves resuelto y lo pones a prueba hasta que te salga solo.</p>
+<div class="formula" aria-label="a a la cuarta más a al cuadrado b al cuadrado más b a la cuarta es igual a a al cuadrado más ab más b al cuadrado por a al cuadrado menos ab más b al cuadrado">a<sup>4</sup> + a<sup>2</sup>b<sup>2</sup> + b<sup>4</sup> = (a<sup>2</sup> <span class="g">+ ab</span> + b<sup>2</sup>)(a<sup>2</sup> <span class="v">− ab</span> + b<sup>2</sup>)</div>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#repaso">Repaso</a><a href="#idea">La idea</a><a href="#metodo">El método</a><a href="#ejemplos">Ejemplos</a><a href="#errores">Errores</a><a href="#quiz">Mini examen</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="repaso">
+<h2><span class="n">1</span>Teoría fácil: ¿qué es un TCP?</h2>
+<p>Empecemos sin miedo. <b>Elevar al cuadrado</b> es multiplicar algo por sí mismo. Por ejemplo, 5² = 5·5 = 25 y también (a + b)² = (a + b)·(a + b).</p>
+<p>Si multiplicas (a + b)·(a + b), siempre te sale un resultado con <b>tres términos</b>. A ese resultado se le llama <b>trinomio cuadrado perfecto</b> (TCP):</p>
+<div class="box math">(a + b)² = <span class="b">a²</span> + <span class="g">2ab</span> + <span class="v">b²</span></div>
+<p>Piensa en un cuadrado grande de lado (a + b). Se parte en 4 zonas: un cuadrado <b>a²</b>, otro cuadrado <b>b²</b> y dos rectángulos <b>ab</b>. Los dos rectángulos juntos forman el <span class="g">2ab</span> del medio.</p>
+<div class="box key"><b>Receta para armar un TCP:</b><br>1) cuadrado del primero, 2) el doble de primero por segundo, 3) cuadrado del segundo.</div>
+<div class="box"><b>Palabras que vas a usar</b><ul>
+<li><b>Raíz cuadrada:</b> el número que multiplicado por sí mismo da el otro. √9 = 3, √x⁴ = x² (se divide el exponente entre 2).</li>
+<li><b>Doble producto:</b> multiplicar las dos raíces y luego por 2. Es el término del medio que “debería” estar.</li>
+<li><b>Diferencia de cuadrados:</b> una resta de dos cuadrados se factoriza así: A² − B² = (A + B)(A − B). Ejemplo: x² − 4 = (x + 2)(x − 2).</li></ul></div>
+</section>
+
+<section id="idea">
+<h2><span class="n">2</span>La idea clave: sumar y restar lo mismo</h2>
+<p>Mira este trinomio: <span class="math">a⁴ + a²b² + b⁴</span>. Sus raíces son <b>a²</b> y <b>b²</b>, y parece un TCP, pero el doble producto sería 2·a²·b² = <span class="g">2a²b²</span> y solo tenemos a²b². <b>Falta una a²b²</b>.</p>
+<p>Solución: <span class="g">la agregamos</span>. Pero si agregas algo, cambias la expresión. Entonces <span class="r">la quitamos</span> enseguida. Es como 10 + 5 − 5: sigues teniendo 10.</p>
+<div class="box math">a⁴ + a²b² <span class="g">+ a²b²</span> + b⁴ <span class="r">− a²b²</span></div>
+<p>Ahora agrupamos: lo primero es un TCP y lo que queda es un cuadrado restado.</p>
+<div class="box math">(a⁴ + 2a²b² + b⁴) − a²b² = (a² + b²)² − (ab)²</div>
+<p>Eso es una diferencia de cuadrados, con A = a² + b² y B = ab. Se factoriza como (A + B)(A − B):</p>
+<div class="box key"><b>Fórmula que debes memorizar</b>
+<div class="math" style="margin-top:8px">a⁴ + a²b² + b⁴ = (a² <span class="g">+ ab</span> + b²)(a² <span class="v">− ab</span> + b²)</div></div>
+<p>Fíjate: los dos factores son casi iguales. Solo cambia el signo del término <b>ab</b>.</p>
+</section>
+
+<section id="metodo">
+<h2><span class="n">3</span>El método en 5 pasos</h2>
+<ol class="steps">
+<li><b>Ordena</b> el trinomio de mayor a menor exponente.</li>
+<li><b>Saca la raíz</b> del primer y del último término. Serán tus “a” y “b”.</li>
+<li><b>Calcula el doble producto</b> (2·a·b). Es el medio que debería haber.</li>
+<li><b>Compara:</b> lo que falte lo <span class="g">sumas</span> y lo <span class="r">restas</span> a la vez.</li>
+<li><b>Factoriza:</b> el TCP queda como (algo)² y el término restado como otro cuadrado. Usa (A + B)(A − B) y ordena.</li>
+</ol>
+<div class="box ok"><b>Atajo:</b> si el trinomio tiene exactamente la forma a⁴ + a²b² + b⁴, aplica la fórmula directamente y te ahorras los pasos.</div>
+<div class="box"><b>¿Cómo lo reconozco?</b> Tiene tres términos, el primero y el último tienen raíz cuadrada exacta, y el del medio <b>no</b> coincide con el doble producto.</div>
+</section>
+
+<section id="ejemplos">
+<h2><span class="n">4</span>Ejemplos resueltos paso a paso</h2>
+
+<div class="box ex"><h3>Ejemplo 1 (fórmula directa): x⁴ + x²y² + y⁴</h3>
+<div class="line"><b>Compara con la fórmula</b> a⁴ + a²b² + b⁴: aquí <b>a = x</b> y <b>b = y</b>.</div>
+<div class="line"><b>Reemplaza</b> en (a² + ab + b²)(a² − ab + b²):</div>
+<div class="line"><b class="v">Respuesta:</b> (x² + xy + y²)(x² − xy + y²)</div></div>
+
+<div class="box ex"><h3>Ejemplo 2 (fórmula con “a” compuesta): 16x⁴ + 4x²y² + y⁴</h3>
+<div class="line"><b>Raíces:</b> √16x⁴ = 4x² y √y⁴ = y². Entonces a² = 4x² → <b>a = 2x</b>, y <b>b = y</b>.</div>
+<div class="line"><b>Verifica el medio:</b> a²b² = (2x)²·y² = 4x²y² ✔ (es el que tenemos).</div>
+<div class="line"><b>Reemplaza:</b> a² = 4x², ab = 2xy, b² = y².</div>
+<div class="line"><b class="v">Respuesta:</b> (4x² + 2xy + y²)(4x² − 2xy + y²)</div></div>
+
+<div class="box ex"><h3>Ejemplo 3 (suma y resta completa): x⁴ + 3x² + 4</h3>
+<div class="line"><b>Raíces:</b> x² y 2. <b>Doble producto:</b> 2·x²·2 = 4x².</div>
+<div class="line"><b>Comparar:</b> tenemos 3x², nos falta <span class="g">x²</span>.</div>
+<div class="line"><b>Sumar y restar:</b> x⁴ + 3x² <span class="g">+ x²</span> + 4 <span class="r">− x²</span></div>
+<div class="line"><b>Agrupar:</b> (x⁴ + 4x² + 4) − x² = (x² + 2)² − x²</div>
+<div class="line"><b class="v">Respuesta:</b> (x² + 2 + x)(x² + 2 − x) = (x² + x + 2)(x² − x + 2)</div></div>
+
+<div class="box ex"><h3>Ejemplo 4 (sin término del medio): m⁴ + 64</h3>
+<div class="line"><b>Raíces:</b> m² y 8. <b>Doble producto:</b> 2·m²·8 = 16m². No hay medio, así que sumamos y restamos <span class="g">16m²</span>.</div>
+<div class="line">m⁴ <span class="g">+ 16m²</span> + 64 <span class="r">− 16m²</span> = (m² + 8)² − (4m)²</div>
+<div class="line"><b class="v">Respuesta:</b> (m² + 4m + 8)(m² − 4m + 8)</div></div>
+
+<div class="box ex"><h3>Ejemplo 5 (con signo negativo): x⁴ − 3x² + 1</h3>
+<div class="line">Para un TCP restado necesitamos <b>−2x²</b>, pero tenemos −3x². Nos “sobra” x², así que sumamos <span class="g">x²</span> y restamos <span class="r">x²</span>.</div>
+<div class="line">x⁴ − 3x² <span class="g">+ x²</span> + 1 <span class="r">− x²</span> = (x² − 1)² − x²</div>
+<div class="line"><b class="v">Respuesta:</b> (x² + x − 1)(x² − x − 1)</div></div>
+
+<div class="box ok"><b>Comprueba tú mismo:</b> multiplica los factores del Ejemplo 1. Los términos del medio (x³y y −x³y, etc.) se cancelan y vuelve x⁴ + x²y² + y⁴.</div>
+</section>
+
+<section id="errores">
+<h2><span class="n">5</span>Errores que debes evitar</h2>
+<div class="box bad"><b>Solo sumar, sin restar.</b> Si sumas x² y no lo restas, cambiaste la expresión. Siempre van los dos.</div>
+<div class="box bad"><b>Olvidar el cuadrado del término que restas.</b> Si restas 9a²b², recuerda que es (3ab)², no 3ab.</div>
+<div class="box bad"><b>Descuidar los signos al final.</b> Al abrir (x² + 1 + x)(x² + 1 − x), ordena cada factor: x² + x + 1 y x² − x + 1.</div>
+<div class="box ok"><b>Comprobación segura:</b> multiplica tus dos factores. Si obtienes el trinomio original, está correcto.</div>
+</section>
+
+
+<section id="quiz">
+<h2><span class="n">6</span>Mini examen</h2>
+<div id="quiz"></div>
+<p class="score" id="score"></p>
+</section>
+</main>
+
+<footer><div class="wrap">Sumar y restar lo mismo no cambia nada; ahí está toda la magia.</div></footer>
+
+<script>
+const Q=[
+{t:"¿Qué significa elevar algo al cuadrado?",o:["Multiplicarlo por 2","Multiplicarlo por sí mismo","Dividirlo entre 2"],c:1,e:"5² = 5·5 = 25."},
+{t:"Con a = x y b = y, ¿cómo queda a⁴ + a²b² + b⁴?",o:["(x² + xy + y²)(x² − xy + y²)","(x² + y²)²","(x² + xy + y²)²"],c:0,e:"Es la fórmula directa con a = x y b = y."},
+{t:"En x⁴ + x²y² + y⁴, ¿cuál es el doble producto de las raíces?",o:["x²y²","2x²y²","4x²y²"],c:1,e:"Las raíces son x² y y²; 2·x²·y² = 2x²y²."},
+{t:"Al sumar un término para completar el TCP, ¿qué haces enseguida?",o:["Nada","Restar el mismo término","Multiplicarlo por 2"],c:1,e:"Sumar y restar lo mismo no cambia el valor."},
+{t:"¿Cuál es la factorización de m⁴ + 64?",o:["(m² + 8)²","(m² + 4m + 8)(m² − 4m + 8)","(m² + 8)(m² − 8)"],c:1,e:"Se suma y resta 16m²: (m² + 8)² − (4m)²."},
+{t:"Factoriza 16x⁴ + 4x²y² + y⁴ (pista: a = 2x, b = y).",o:["(4x² + 2xy + y²)(4x² − 2xy + y²)","(4x² + y²)²","(2x + y)⁴"],c:0,e:"a² = 4x², ab = 2xy, b² = y²."}
+];
+let done=0,ok=0;
+const root=document.getElementById("quiz");
+Q.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="q";
+ d.innerHTML="<b>"+(i+1)+". "+q.t+"</b>";
+ const fb=document.createElement("div");fb.className="fb";
+ let answered=false;
+ q.o.forEach((txt,j)=>{
+  const b=document.createElement("button");b.type="button";b.textContent=txt;
+  b.onclick=()=>{
+   if(answered)return;answered=true;done++;
+   const all=d.querySelectorAll("button");
+   all[q.c].classList.add("right");
+   if(j===q.c){ok++;fb.textContent="¡Correcto! "+q.e;fb.style.color="var(--green)";}
+   else{b.classList.add("wrong");fb.textContent="Casi. "+q.e;fb.style.color="var(--red)";}
+   if(done===Q.length)document.getElementById("score").textContent="Resultado: "+ok+" de "+Q.length+(ok===Q.length?". ¡Ya vas camino a experto!":". Repasa el método y vuelve a intentarlo.");
+  };
+  d.appendChild(b);
+ });
+ d.appendChild(fb);root.appendChild(d);
+});
+</script>
+</body>
+</html>
